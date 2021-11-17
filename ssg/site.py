@@ -31,6 +31,7 @@ class Site:
     def build(self):
         extensions.load_bundled()
         hooks.event("collect_files", self.source, self.parsers)
+        hooks.event("start_build")
         start_build()
         self.dest.mkdir(parents=True, exist_ok=True)
         for path in self.source.rglob("*"):
@@ -40,6 +41,7 @@ class Site:
                 self.run_parser(path)
         extensions.load_bundled()
         stats()
+        hooks.event("stats")
 
     @staticmethod
     def error(message):
